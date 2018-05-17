@@ -13,14 +13,15 @@ app.engine('.hbs', exphbs({
 app.set('view engine', '.hbs')
 app.set('views', path.join(__dirname, 'views'))
 
-app.get('/', (request, response) => {
-  response.render('home')
-})
-
+app.use('/public', express.static(__dirname + '/public'));
 app.use((err, request, response, next) => {
   // log the error, for now just console.log
   console.log(err)
   response.status(500).send('Something broke!')
+})
+
+app.get('/', (request, response) => {
+  response.render('home')
 })
 
 app.listen(port, (err) => {
